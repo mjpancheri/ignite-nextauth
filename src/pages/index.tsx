@@ -1,13 +1,15 @@
 
 import { FormEvent, useState } from 'react';
-import { useAuthContext } from '../contexts/AuthContext';
+
+import { useAuth } from '../hooks/useAuth';
 import styles from '../styles/Home.module.css';
+import { withSSRGuest } from '../utils/withSSRGuest';
 
 export default function Home() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('diego@rocketseat.team');
+  const [password, setPassword] = useState('123456');
 
-  const { signIn } = useAuthContext();
+  const { signIn } = useAuth();
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -28,3 +30,9 @@ export default function Home() {
     </form>
   )
 }
+
+export const getServerSideProps = withSSRGuest(async (ctx) => {
+  return {
+    props: {}
+  }
+})
